@@ -5,7 +5,7 @@ if [ !$(date +%m) == "12" ]; then
   exit 1
 fi
 
-SESSION=53616c7465645f5fdd986f72d1c9537645b63795c9641ebb78620a5ea82323f0cc8e47a08de27647d53adb7d5cc85b9fb009d3fb8a02bb4550aa7f313b3993f6
+SESSION=$(cat session)
 
 YEAR=$(date +%Y)
 
