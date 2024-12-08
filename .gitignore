@@ -1,3 +1,4 @@
-newday.sh
-**/*.o
-**/main
+session
+.direnv
+.envrc
+.DS_Store
