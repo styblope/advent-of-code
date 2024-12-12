@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# https://adventofcode.com/2024/day/5
 
 sum1 = 0
 sum2 = 0

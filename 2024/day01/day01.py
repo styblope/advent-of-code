@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# https://adventofcode.com/2024/day/1
 
 with open("input", "r") as f:
     left, right = zip(*(map(int, line.split()) for line in f))

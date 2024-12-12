@@ -1,5 +1,4 @@
 #!/bin/sh
-
 if [ !$(date +%m) == "12" ]; then
   echo "It's not Advent time! Exiting."
   exit 1
@@ -24,10 +23,12 @@ mkdir -p $DIR
 
 echo "copying template"
 FILE="$DIR.py"
-cp template.py $DIR/$FILE
+cp -n template.py $DIR/$FILE
+sed -i -e "s|DD|$DAY_SHORT|" $DIR/$FILE
+sed -i -e "s|YYYY|$YEAR|" $DIR/$FILE
 
 echo "downloading input"
-curl -s -b session=$SESSION -o $DIR/input \
+curl -s -b session="$SESSION" -o "$DIR/input" \
   "https://adventofcode.com/$YEAR/day/$DAY_SHORT/input"
 
 cd $DIR

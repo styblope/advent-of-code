@@ -23,7 +23,7 @@ echo "creating $DIR directory"
 mkdir -p $DIR
 
 echo "copying template"
-cp template.zig $DIR/main.zig
+cp -n template.zig $DIR/main.zig
 sed -i -e "s|XXX|$DAY_SHORT|" $DIR/main.zig
 
 echo "downloading input"

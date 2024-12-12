@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# https://adventofcode.com/2024/day/3
 import re
 
 
