@@ -3,14 +3,16 @@
 import re
 import operator
 import itertools
+import sys
 
 sum1 = sum2 = 0
 
-with open("input", "r") as f:
-    parsed = [list(map(int, re.findall(r"\d+", line))) for line in f]
+filename = sys.argv[1] if len(sys.argv) >= 2 else "input"
+f = open(filename, "r")
+parsed = [list(map(int, re.findall(r"\d+", line))) for line in f]
 
 
-OPERATORS = [operator.add, operator.mul, lambda a,b: int(f"{a}{b}")]
+OPERATORS = [operator.add, operator.mul, lambda a, b: int(f"{a}{b}")]
 
 for row in parsed:
     test, *vals = row
@@ -31,4 +33,3 @@ for row in parsed:
 
 print(sum1)
 print(sum2)
-

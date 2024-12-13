@@ -1,9 +1,12 @@
 #!/usr/bin/env python3
 # https://adventofcode.com/2024/day/2
+import sys
 from enum import Enum
 
-sum1 = 0
-sum2 = 0
+sum1 = sum2 = 0
+
+filename = sys.argv[1] if len(sys.argv) >= 2 else "input"
+f = open(filename, "r")
 
 
 class Trend(Enum):
@@ -28,20 +31,19 @@ def state(report):
     return [trend(report[i + 1] - report[i]) for i in range(len(report) - 1)]
 
 
-with open("input", "r") as f:
-    for line in f:
-        report = list(map(int, line.split()))
+for line in f:
+    report = list(map(int, line.split()))
 
-        if is_safe(state(report)):
-            sum1 += 1
-            sum2 += 1
-        else:
-            # part2, less one level
-            for p in range(len(report)):
-                damped = [v for i, v in enumerate(report) if i != p]
-                if is_safe(state(damped)):
-                    sum2 += 1
-                    break
+    if is_safe(state(report)):
+        sum1 += 1
+        sum2 += 1
+    else:
+        # part2, less one level
+        for p in range(len(report)):
+            damped = [v for i, v in enumerate(report) if i != p]
+            if is_safe(state(damped)):
+                sum2 += 1
+                break
 
 print(sum1)
 print(sum2)

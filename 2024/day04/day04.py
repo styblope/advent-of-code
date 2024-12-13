@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
 # https://adventofcode.com/2024/day/4
+import sys
 
 
-input = open("input", "r").read()
+filename = sys.argv[1] if len(sys.argv) >= 2 else "input"
+input = open(filename, "r").read()
 W = input.index("\n") + 1
 sum1 = 0
 sum2 = 0

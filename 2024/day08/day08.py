@@ -4,8 +4,9 @@ import itertools
 from operator import sub
 import sys
 
-with open(sys.argv[1], "r") as f:
-    grid = [line.strip() for line in f.readlines()]
+filename = sys.argv[1] if len(sys.argv) >= 2 else "input"
+f = open(filename, "r")
+grid = [line.strip() for line in f.readlines()]
 
 sum1 = sum2 = 0
 X, Y = len(grid[0]), len(grid)

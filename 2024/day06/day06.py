@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 # https://adventofcode.com/2024/day/7
+import sys
 
 NONE = 0
 UP = 1
@@ -7,8 +8,8 @@ RIGHT = 2
 DOWN = 4
 LEFT = 8
 
-with open("input", "r") as f:
-    input = f.read()
+filename = sys.argv[1] if len(sys.argv) >= 2 else "input"
+input = open(filename, "r").read()
 
 start = input.index("^")
 W = input.index("\n") + 1

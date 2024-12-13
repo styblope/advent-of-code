@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
 # https://adventofcode.com/2024/day/5
+import sys
 
-sum1 = 0
-sum2 = 0
+sum1 = sum2 = 0
 
+filename = sys.argv[1] if len(sys.argv) >= 2 else "input"
 rule_list, update_list = map(
-    lambda x: x.splitlines(), open("input", "r").read().split("\n\n")
+    lambda x: x.splitlines(), open(filename, "r").read().split("\n\n")
 )
 rules = [tuple(map(int, r.split("|"))) for r in rule_list]
 updates = [list(map(int, u.split(","))) for u in update_list]
