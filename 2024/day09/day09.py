@@ -9,39 +9,47 @@ input = open(filename, "r").read()
 
 disk = []
 part = []
-for i in range(len(input) // 2):
-    disk += [i] * int(input[i * 2])
-    part.append([i, int(input[i * 2])])
+fs = []
+pos = 0
+for id in range(len(input) // 2):
+    disk += [id] * int(input[id * 2])
+    part.append([id, int(input[id * 2])])
     try:
-        disk += [None] * int(input[i * 2 + 1])
-        part.append([None, int(input[i * 2 + 1])])
+        disk += [None] * int(input[id * 2 + 1])
+        part.append([None, int(input[id * 2 + 1])])
+
+        # [id, position, length]
+        len_block = input[id*2]
+        len_space = input[id*2 + 1]
+        fs.append([id, pos, len_block])
+        pos = len_block + len_space 
     except:
         break
 
 
 def checksum(disk):
-    revc = len(disk) - 1
     i = 0
-    while i < len(disk) and i <= revc:
+    k = len(disk) - 1
+    while i < len(disk) and i <= k:
         if disk[i] is None:
-            while disk[revc] is None:
-                revc -= 1
-            disk[i] = disk[revc]
-            disk[revc] = None
-            revc -= 1
+            while disk[k] is None:
+                k -= 1
+            disk[i] = disk[k]
+            disk[k] = None
+            k -= 1
         i += 1
 
     return sum([i * int(v) for i, v in enumerate(disk) if v is not None])
 
 
-### part 2
+# part 2
 fixed = part.copy()
 for y in range(len(input) - 2, -1, -2):
     r = part.index(fixed[y])
-    for i in range(1, r, 2):
-        d = part[i][1] - part[r][1]
+    for id in range(1, r, 2):
+        d = part[id][1] - part[r][1]
         if d >= 0:
-            part[i][1] = d
+            part[id][1] = d
             try:
                 part[r + 1][1] += part[r][1] + part[r - 1][1]
             except:
@@ -49,8 +57,8 @@ for y in range(len(input) - 2, -1, -2):
             x = part[r]
             part.pop(r)
             part.pop(r - 1)
-            part.insert(i, [None, 0])
-            part.insert(i + 1, x)
+            part.insert(id, [None, 0])
+            part.insert(id + 1, x)
             break
 
 idx = 0

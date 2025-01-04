@@ -64,7 +64,7 @@ for i, t in enumerate(input):
         perimeters.append(perim)
 
 
-# TODO improve the execution time by narrowing down the iteration scope to just the range of the input region in both verticals. Still a prettly lame apporach
+# TODO improve the execution time by narrowing down the iteration scope to just the range of the input region in both verticals. Still a prettly lame solution
 def sides(region):
     pos, border = zip(*region)
     res = 0
