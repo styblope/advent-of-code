@@ -2,59 +2,55 @@
 # https://adventofcode.com/2024/day/7
 import sys
 
-NONE = 0
-UP = 1
-RIGHT = 2
-DOWN = 4
-LEFT = 8
-
 filename = sys.argv[1] if len(sys.argv) >= 2 else "input"
-input = open(filename, "r").read()
+data = open(filename, "r").read()
 
-start = input.index("^")
-W = input.index("\n") + 1
-len_input = len(input)
-OFFSETS = {UP: -W, RIGHT: 1, DOWN: W, LEFT: -1}
+S = data.index("^")
+W = data.index("\n") + 1
+len_input = len(data)
+UP, RIGHT, DOWN, LEFT = -W, 1, W, -1
 NEXT_DIR = {UP: RIGHT, RIGHT: DOWN, DOWN: LEFT, LEFT: UP}
+jumps = dict()
 
 
 def walk(p, d, obstruction=None):
-    global visited, path
-    visited = [0] * len_input
-    path = []
-
+    visited = dict()
+    fr, steps = p, 0
     while True:
-        if visited[p] & d:
-            return True
+        if visited.get(p) == d:
+            return visited, True
 
-        visited[p] |= d
-        path.append((p, d))
+        if p not in visited:
+            visited[p] = d
 
-        next = p + OFFSETS[d]
+        next = p + d
 
-        # check bounds
-        if next < 0 or next >= len_input or input[next] == "\n":
-            return False
+        if next < 0 or next >= len_input or data[next] == "\n":
+            return visited, False
 
-        # check obstacle
-        if input[next] == "#" or next == obstruction:
-            d = NEXT_DIR[d]
+        if data[next] == "#" or next == obstruction:
+            nextd = NEXT_DIR[d]
+            if not obstruction:
+                jumps[(fr, d)] = steps
+                fr, steps = p, 0
+            elif (
+                (s := jumps.get((p, nextd)))
+                and obstruction % W != p % W
+                and obstruction // W != p // W
+            ):
+                p += s * nextd
+            d = nextd
+
         else:
             p = next
+            steps += 1
 
 
 # part 1
-path = [0] * 10000  # global list of (position, direction) tuples
-visited = [0] * len_input  # global array of visited directions
-walk(start, UP)
-sum1 = sum(1 for v in visited if v)
+visited, _ = walk(S, UP)
+print(len(visited))
 
 # part 2
-obstacles = [i for i, v in enumerate(visited) if v and i != start]
-p, d = zip(*path)
-sum2 = 0
-for o in obstacles:
-    idx = p.index(o)
-    sum2 += walk(p[idx - 1], d[idx - 1], obstruction=o)
-
-print(sum1, sum2)
+p, d = zip(*visited.items())
+sum2 = sum(walk(p[i - 1], d[i - 1], obstruction=o)[1] for i, o in enumerate(visited))
+print(sum2)
