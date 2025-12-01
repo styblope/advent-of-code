@@ -15,7 +15,7 @@ H = 7
 keys = []
 locks = []
 for grid in grids:
-    counts = list(map(lambda x: x.count("#"), zip(*grid.split("\n"))))
+    counts = list(map(lambda x: x.count("#"), zip(*grid.splitlines())))
     heights = [c - 1 for c in counts]
 
     if grid[0:W] == "#" * W:

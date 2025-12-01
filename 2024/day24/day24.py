@@ -15,7 +15,7 @@ data = open(filename, "r").read().split("\n\n")
 inputs = {k: int(v) for line in data[0].split("\n") for k, v in [line.split(":")]}
 gates = {
     k: v
-    for line in data[1].split("\n")
+    for line in data[1].splitlines()
     for *v, k in re.findall(r"(\w+) ([A-Z]+) (\w+) -> (\w+)", line)
 }
 
